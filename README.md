@@ -171,7 +171,11 @@ Installs dependencies to node_modules directory
 
 ### `yarn prettier`
 
-This application uses Prettier to check and format code. You can run the above command to clean your code, or you can [integrate it with your editor](https://prettier.io/docs/en/editors.html), and set up a Prettier extenson and formatting changes will automatically be applied when you save.
+This application uses Prettier to check and format code. You can run the above
+command to clean your code, or you can
+[integrate it with your editor](https://prettier.io/docs/en/editors.html), and
+set up a Prettier extenson and formatting changes will automatically be applied
+when you save.
 
 ### `yarn start`
 
