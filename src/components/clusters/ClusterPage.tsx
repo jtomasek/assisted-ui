@@ -23,24 +23,21 @@ const ClusterPage: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
   const { data: cluster, uiState, forceReload } = useSelector(selectCurrentClusterState);
   const dispatch = useDispatch();
 
-  const fetchCluster = React.useCallback(() => dispatch(fetchClusterAsync(clusterId)), [
-    clusterId,
-    dispatch,
-  ]);
+  const timer = React.useRef<NodeJS.Timeout>();
+
+  const fetchCluster = React.useCallback(() => {
+    timer.current && clearTimeout(timer.current);
+    dispatch(fetchClusterAsync(clusterId));
+    timer.current = setTimeout(() => fetchCluster(), POLLING_INTERVAL);
+  }, [clusterId, dispatch]);
+
   React.useEffect(() => {
-    if (forceReload) {
-      dispatch(forceReloadAction(false));
-      fetchCluster();
-      setTimeout(() => dispatch(forceReloadAction(true)), POLLING_INTERVAL);
-    }
-  }, [fetchCluster, dispatch, forceReload]);
-  React.useEffect(() => {
-    dispatch(forceReloadAction(true));
+    fetchCluster();
     return () => {
-      dispatch(forceReloadAction(false));
+      timer.current && clearTimeout(timer.current);
       dispatch(cleanCluster());
     };
-  }, [dispatch]);
+  }, [fetchCluster, dispatch]);
 
   const cancel = (
     <Button
