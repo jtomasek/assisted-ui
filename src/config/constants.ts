@@ -22,8 +22,8 @@ export type HostRolesType = 'master' | 'worker';
 
 export const CLUSTER_STATUS_LABELS = {
   insufficient: 'Draft',
-  ready: 'Draft',
-  error: 'Error',
+  ready: 'Ready',
   installing: 'Installing',
+  error: 'Error',
   installed: 'Installed',
 };
